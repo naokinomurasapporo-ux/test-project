@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lalamove（ララムーブ）法人向けサービスご案内</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      color: #1a1a1a;
+      line-height: 1.7;
+      background: #fff;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== VARIABLES ===== */
+    :root {
+      --orange: #FF6500;
+      --orange-dark: #E05500;
+      --orange-light: #FFF3EC;
+      --gray-bg: #F7F7F7;
+      --gray-text: #666;
+      --dark: #1A1A1A;
+      --white: #FFFFFF;
+      --shadow: 0 4px 24px rgba(0,0,0,0.10);
+      --radius: 12px;
+    }
+
+    /* ===== HEADER / NAV ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #f0f0f0;
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--orange);
+      letter-spacing: -0.5px;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--orange);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+    nav { display: flex; align-items: center; gap: 32px; }
+    nav a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #444;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--orange); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(255,101,0,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--orange-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,101,0,0.45);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--orange);
+      border: 2px solid var(--orange);
+    }
+    .btn-outline:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+    }
+    .btn-large { padding: 18px 44px; font-size: 1.1rem; border-radius: 10px; }
+    .btn-white {
+      background: #fff;
+      color: var(--orange);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 96px 40px; }
+    .container { max-width: 1080px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      background: var(--orange-light);
+      color: var(--orange);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 99px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.3;
+      color: var(--dark);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--gray-text);
+      max-width: 600px;
+    }
+    .center { text-align: center; }
+    .center .section-sub { margin: 0 auto; }
+
+    /* ===== HERO ===== */
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 96px;
+      background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 60%, #3A2010 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FF6500' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,101,0,0.15);
+      border: 1px solid rgba(255,101,0,0.3);
+      color: #FF9A60;
+      padding: 8px 18px;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.3); }
+    }
+    #hero .section-title {
+      color: #fff;
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      margin-bottom: 24px;
+    }
+    .hero-highlight { color: var(--orange); }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 600px;
+      margin-bottom: 44px;
+    }
+    .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 72px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat { text-align: left; }
+    .stat-num {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+    .stat-num span { color: var(--orange); }
+    .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); margin-top: 4px; }
+
+    /* ===== PROBLEMS ===== */
+    #problems { background: var(--gray-bg); }
+    .problems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .problem-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 32px;
+      border-left: 4px solid #e0e0e0;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .problem-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .problem-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    .problem-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .problem-card p { font-size: 0.9rem; color: var(--gray-text); }
+
+    .arrow-down {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--orange);
+      margin: 48px 0;
+    }
+    .solution-banner {
+      background: var(--orange);
+      border-radius: var(--radius);
+      padding: 48px;
+      color: #fff;
+      text-align: center;
+    }
+    .solution-banner h3 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+    .solution-banner p { font-size: 1.05rem; opacity: 0.9; }
+
+    /* ===== FEATURES ===== */
+    #features { background: #fff; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .feature-card {
+      background: var(--gray-bg);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-6px);
+    }
+    .feature-icon-wrap {
+      width: 60px; height: 60px;
+      background: var(--orange-light);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.6rem;
+    }
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+    .feature-card p { font-size: 0.9rem; color: var(--gray-text); line-height: 1.8; }
+    .feature-tag {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-top: 14px;
+    }
+
+    /* ===== PRICING ===== */
+    #pricing { background: var(--gray-bg); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .pricing-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      border: 2px solid transparent;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .pricing-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .pricing-card.featured {
+      border-color: var(--orange);
+      background: var(--dark);
+      color: #fff;
+    }
+    .featured-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--orange);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 18px;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+    .plan-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .plan-desc { font-size: 0.88rem; color: var(--gray-text); margin-bottom: 28px; }
+    .pricing-card.featured .plan-desc { color: rgba(255,255,255,0.6); }
+    .plan-price {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .plan-price-note { font-size: 0.82rem; color: var(--gray-text); margin-bottom: 32px; }
+    .pricing-card.featured .plan-price-note { color: rgba(255,255,255,0.5); }
+    .plan-features { list-style: none; margin-bottom: 36px; }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .pricing-card.featured .plan-features li { border-color: rgba(255,255,255,0.1); }
+    .plan-features li .check { color: var(--orange); font-weight: 900; flex-shrink: 0; }
+
+    /* ===== CASES ===== */
+    #cases { background: #fff; }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .case-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s;
+    }
+    .case-card:hover { transform: translateY(-6px); }
+    .case-header {
+      background: linear-gradient(135deg, var(--orange), #FF9A60);
+      padding: 28px;
+      color: #fff;
+    }
+    .case-industry {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .case-company { font-size: 1.15rem; font-weight: 800; }
+    .case-body { padding: 28px; background: #fff; }
+    .case-body h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+    .case-body p { font-size: 0.9rem; color: var(--gray-text); line-height: 1.8; }
+    .case-result {
+      margin-top: 16px;
+      background: var(--orange-light);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--orange);
+    }
+
+    /* ===== CTA ===== */
+    #cta {
+      background: linear-gradient(135deg, var(--orange) 0%, #FF9A60 100%);
+      padding: 96px 40px;
+    }
+    #cta .section-title { color: #fff; }
+    #cta .section-sub { color: rgba(255,255,255,0.85); }
+    .cta-form {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 680px;
+      margin: 48px auto 0;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 13px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.55); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.22);
+    }
+    .form-group select option { color: #1a1a1a; background: #fff; }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit { text-align: center; margin-top: 8px; }
+
+    /* ===== PDF SECTION ===== */
+    #pdf-section {
+      background: var(--dark);
+      padding: 64px 40px;
+      text-align: center;
+    }
+    .pdf-card {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 48px 64px;
+      max-width: 560px;
+      width: 100%;
+    }
+    .pdf-icon {
+      width: 72px; height: 72px;
+      background: var(--orange-light);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 24px;
+    }
+    .pdf-card h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .pdf-card p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #111;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 32px 40px;
+      font-size: 0.85rem;
+    }
+    footer .logo { justify-content: center; color: #fff; margin-bottom: 12px; }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      header, #pdf-section, .hero-cta .btn-outline, .no-print { display: none !important; }
+      section { padding: 48px 24px; }
+      #hero { padding-top: 48px; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      header { padding: 0 20px; }
+      nav { display: none; }
+      section { padding: 64px 20px; }
+      .hero-stats { gap: 24px; flex-wrap: wrap; }
+      .form-row { grid-template-columns: 1fr; }
+      .cta-form { padding: 28px 20px; }
+      .pdf-card { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">L</div>
+    Lalamove
+  </div>
+  <nav>
+    <a href="#problems">課題と解決策</a>
+    <a href="#features">特徴</a>
+    <a href="#pricing">料金プラン</a>
+    <a href="#cases">導入事例</a>
+  </nav>
+  <a href="#cta" class="btn btn-primary">無料相談する</a>
+</header>
+
+<!-- ===== 1. HERO ===== -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      24時間365日 法人向け配達サービス
+    </div>
+    <h1 class="section-title">
+      最短<span class="hero-highlight">25分</span>で届く、<br>
+      ビジネスに最適な<br>
+      <span class="hero-highlight">即時配達</span>を実現。
+    </h1>
+    <p class="hero-desc">
+      Lalamove（ララムーブ）は、アプリひとつで注文から配達追跡まで完結。
+      バイク・軽バン・トラックを即時手配し、あらゆる法人ニーズに対応します。
+    </p>
+    <div class="hero-cta">
+      <a href="#cta" class="btn btn-primary btn-large">無料で資料請求・相談する</a>
+      <a href="#features" class="btn btn-outline btn-large" style="color:#fff; border-color:rgba(255,255,255,0.4);">サービス詳細を見る</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">最短<span>25</span>分</div>
+        <div class="stat-label">配達完了まで</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span>24</span>/<span>365</span></div>
+        <div class="stat-label">年中無休で対応</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span>3</span>種類</div>
+        <div class="stat-label">バイク・軽バン・トラック</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span>EC</span>連携</div>
+        <div class="stat-label">システム統合対応</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2. PROBLEMS ===== -->
+<section id="problems">
+  <div class="container">
+    <div class="fade-in">
+      <span class="section-label">課題と解決策</span>
+      <h2 class="section-title">配送に関するこんな悩み、<br>ありませんか？</h2>
+      <p class="section-sub">多くの法人企業が抱える配送の「あるある」課題。Lalamoveが一括解決します。</p>
+    </div>
+
+    <div class="problems-grid fade-in">
+      <div class="problem-card">
+        <div class="problem-icon">⏰</div>
+        <h3>急な配達依頼に対応できない</h3>
+        <p>当日・緊急対応が必要なのに、既存の配送業者では翌日以降になってしまう。</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📦</div>
+        <h3>荷物サイズに合う車両がない</h3>
+        <p>小さな書類から大型荷物まで、サイズに合わせた最適な車種を選ぶのが難しい。</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🌙</div>
+        <h3>夜間・休日の配達が手配できない</h3>
+        <p>深夜や祝日に配送が必要でも、対応してくれる業者が見つからない。</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📍</div>
+        <h3>配達状況がリアルタイムで把握できない</h3>
+        <p>「今どこにある？」という顧客からの問い合わせに、すぐ答えられない。</p>
+      </div>
+    </div>
+
+    <div class="arrow-down fade-in">↓</div>
+
+    <div class="solution-banner fade-in">
+      <h3>すべての課題、Lalamoveが解決します</h3>
+      <p>アプリひとつで24時間365日、最短25分の即時配達。<br>
+      バイクから2tトラックまで、あらゆるニーズに柔軟対応。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. FEATURES ===== -->
+<section id="features">
+  <div class="container">
+    <div class="fade-in center">
+      <span class="section-label">サービス特徴</span>
+      <h2 class="section-title">選ばれる4つの理由</h2>
+      <p class="section-sub">法人のビジネスに欠かせない機能と柔軟性を、ひとつのサービスで提供します。</p>
+    </div>
+
+    <div class="features-grid fade-in">
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🚀</div>
+        <h3>最短25分の即時配達</h3>
+        <p>注文確定後、最短25分で配達完了。急な依頼にも即時対応し、ビジネスの「今すぐ」に応えます。24時間365日、年末年始も休まず稼働。</p>
+        <span class="feature-tag">24時間365日対応</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🚗</div>
+        <h3>豊富な車種ラインナップ</h3>
+        <p>バイク便から軽バン、1tトラック・2tトラックまで多彩な車種を完備。荷物のサイズや量に合わせて最適な車種を選択できます。</p>
+        <span class="feature-tag">4車種以上から選択</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">📱</div>
+        <h3>アプリで簡単注文 &amp; リアルタイム追跡</h3>
+        <p>専用アプリで配達依頼から追跡まで完結。ドライバーの現在地をリアルタイムで確認でき、顧客への配達状況共有もスムーズ。</p>
+        <span class="feature-tag">GPS追跡対応</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🔗</div>
+        <h3>ECシステムとのAPI連携</h3>
+        <p>自社のECプラットフォームや基幹システムとAPI連携が可能。注文から配送手配まで自動化し、業務効率を大幅に改善します。</p>
+        <span class="feature-tag">API連携対応</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. PRICING ===== -->
+<section id="pricing">
+  <div class="container">
+    <div class="fade-in center">
+      <span class="section-label">料金プラン</span>
+      <h2 class="section-title">法人ニーズに合わせた<br>柔軟な料金体系</h2>
+      <p class="section-sub">利用規模に応じてお選びいただけます。詳細はお問い合わせください。</p>
+    </div>
+
+    <div class="pricing-grid fade-in">
+      <div class="pricing-card">
+        <div class="plan-name">スタータープラン</div>
+        <div class="plan-desc">配送頻度が少ない企業・スタートアップ向け</div>
+        <div class="plan-price">都度課金</div>
+        <div class="plan-price-note">固定費なし。利用した分だけお支払い</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> バイク・軽バン選択可</li>
+          <li><span class="check">✓</span> アプリ注文・追跡</li>
+          <li><span class="check">✓</span> 24時間365日対応</li>
+          <li><span class="check">✓</span> 基本サポート</li>
+        </ul>
+        <a href="#cta" class="btn btn-outline" style="width:100%; justify-content:center;">お問い合わせ</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="featured-badge">おすすめ 人気No.1</div>
+        <div class="plan-name" style="color:#fff;">法人ボリュームプラン</div>
+        <div class="plan-desc">月間配送件数が多い中〜大規模法人向け</div>
+        <div class="plan-price">要見積り</div>
+        <div class="plan-price-note">ボリュームディスカウント適用</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 全車種選択可（トラック含む）</li>
+          <li><span class="check">✓</span> 専任アカウントマネージャー</li>
+          <li><span class="check">✓</span> 月次請求・後払い対応</li>
+          <li><span class="check">✓</span> API連携サポート</li>
+          <li><span class="check">✓</span> 優先配車サービス</li>
+          <li><span class="check">✓</span> 24時間専用サポート窓口</span></li>
+        </ul>
+        <a href="#cta" class="btn btn-primary" style="width:100%; justify-content:center;">無料見積り相談</a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="plan-name">エンタープライズプラン</div>
+        <div class="plan-desc">大量配送・ECシステム連携が必要な大企業向け</div>
+        <div class="plan-price">完全カスタム</div>
+        <div class="plan-price-note">SLA締結・専用インフラ構築対応</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> 専用API・システム連携</li>
+          <li><span class="check">✓</span> SLA保証</li>
+          <li><span class="check">✓</span> カスタム請求・精算</li>
+          <li><span class="check">✓</span> 専属チーム対応</li>
+          <li><span class="check">✓</span> 定期レポーティング</li>
+        </ul>
+        <a href="#cta" class="btn btn-outline" style="width:100%; justify-content:center;">詳細を相談する</a>
+      </div>
+    </div>
+
+    <p class="fade-in center" style="margin-top:32px; color: var(--gray-text); font-size:0.88rem;">
+      ※ 表示価格はすべて税別です。詳細な料金は配達距離・荷物サイズ・利用頻度によって異なります。
+    </p>
+  </div>
+</section>
+
+<!-- ===== 5. CASES ===== -->
+<section id="cases">
+  <div class="container">
+    <div class="fade-in center">
+      <span class="section-label">導入事例</span>
+      <h2 class="section-title">導入企業の声</h2>
+      <p class="section-sub">様々な業種・規模の企業がLalamoveを活用し、配送課題を解決しています。</p>
+    </div>
+
+    <div class="cases-grid fade-in">
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-industry">EC・通販業</div>
+          <div class="case-company">大手アパレルEC企業</div>
+        </div>
+        <div class="case-body">
+          <h4>当日発送の対応率が大幅改善</h4>
+          <p>繁忙期の急増する注文に対して、当日配送の対応が困難でした。LalalamoveのAPI連携導入後、注文受付から配送手配まで自動化し、オペレーションコストを大幅に削減。</p>
+          <div class="case-result">
+            ✦ 当日配送対応率 +68% 向上 ／ 配送手配コスト 35%削減
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-industry">飲食・フードデリバリー</div>
+          <div class="case-company">都内レストランチェーン（20店舗）</div>
+        </div>
+        <div class="case-body">
+          <h4>深夜・休日の食材緊急配送が解決</h4>
+          <p>深夜営業中に食材が不足した際、緊急調達から配送まで対応できる業者がなく困っていました。Lalamoveの24時間対応で深夜でも最短25分で食材が届くように。</p>
+          <div class="case-result">
+            ✦ 機会損失ゼロを達成 ／ 顧客満足度スコア +22pt向上
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-header">
+          <div class="case-industry">製造・部品調達</div>
+          <div class="case-company">中堅製造メーカー</div>
+        </div>
+        <div class="case-body">
+          <h4>ライン停止リスクの緊急部品調達に対応</h4>
+          <p>製造ライン停止につながる部品不足の緊急時に、即時対応できる配送手段がありませんでした。トラック対応で大型部品も含め、緊急配送を迅速に実現。</p>
+          <div class="case-result">
+            ✦ ライン停止時間 90%削減 ／ 年間損失コスト 大幅改善
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. CTA ===== -->
+<section id="cta">
+  <div class="container center">
+    <div class="fade-in">
+      <span class="section-label" style="background:rgba(255,255,255,0.2); color:#fff;">無料相談・資料請求</span>
+      <h2 class="section-title">まずはお気軽に<br>ご相談ください</h2>
+      <p class="section-sub">専任の法人担当がヒアリングし、貴社に最適なプランをご提案します。<br>相談・資料請求は完全無料です。</p>
+    </div>
+
+    <div class="cta-form fade-in">
+      <div class="form-row">
+        <div class="form-group">
+          <label>会社名 <span style="color:#FFD0B0">*</span></label>
+          <input type="text" placeholder="株式会社〇〇" />
+        </div>
+        <div class="form-group">
+          <label>担当者名 <span style="color:#FFD0B0">*</span></label>
+          <input type="text" placeholder="山田 太郎" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>メールアドレス <span style="color:#FFD0B0">*</span></label>
+          <input type="email" placeholder="example@company.co.jp" />
+        </div>
+        <div class="form-group">
+          <label>電話番号</label>
+          <input type="tel" placeholder="03-XXXX-XXXX" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>月間配送件数の目安</label>
+        <select>
+          <option value="">選択してください</option>
+          <option>月10件未満</option>
+          <option>月10〜50件</option>
+          <option>月50〜200件</option>
+          <option>月200〜500件</option>
+          <option>月500件以上</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>ご相談内容・ご要望</label>
+        <textarea placeholder="配送の課題や、知りたいことをご自由にお書きください。"></textarea>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn btn-white btn-large" onclick="alert('お問い合わせありがとうございます。担当者より2営業日以内にご連絡いたします。')">
+          無料で相談・資料請求する →
+        </button>
+        <p style="margin-top:14px; font-size:0.82rem; color:rgba(255,255,255,0.6);">
+          送信後、2営業日以内に担当者よりご連絡いたします。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. PDF DOWNLOAD ===== -->
+<section id="pdf-section">
+  <div class="container center">
+    <div class="pdf-card fade-in">
+      <div class="pdf-icon">📄</div>
+      <h3>サービス資料をダウンロード</h3>
+      <p>
+        Lalamove法人向けサービスの詳細資料（PDF）をダウンロードいただけます。<br>
+        料金プランや導入事例をまとめた資料を社内共有にご活用ください。
+      </p>
+      <button class="btn btn-primary btn-large" onclick="downloadPDF()">
+        📥　PDF資料をダウンロード
+      </button>
+      <p style="margin-top:16px; font-size:0.8rem; color:rgba(255,255,255,0.35);">
+        ファイルサイズ：約2MB ／ A4縦形式
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="logo">
+    <div class="logo-icon" style="width:28px;height:28px;font-size:0.9rem;">L</div>
+    Lalamove
+  </div>
+  <p style="margin-bottom:8px;">法人向けお問い合わせ：<a href="mailto:b2b@lalamove.com" style="color:var(--orange);">b2b@lalamove.com</a></p>
+  <p>&copy; 2024 Lalamove. All rights reserved.</p>
+</footer>
+
+<script>
+  /* ===== SCROLL ANIMATION ===== */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  /* ===== PDF DOWNLOAD ===== */
+  function downloadPDF() {
+    const btn = document.querySelector('#pdf-section button');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳　生成中...';
+    btn.disabled = true;
+
+    const element = document.body;
+    const opt = {
+      margin:       [10, 10, 10, 10],
+      filename:     'Lalamove_B2B_ServiceGuide.pdf',
+      image:        { type: 'jpeg', quality: 0.95 },
+      html2canvas:  {
+        scale: 1.5,
+        useCORS: true,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: 1200,
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait',
+        compress: true,
+      },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }).catch(() => {
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      alert('PDFの生成に失敗しました。ブラウザの印刷機能（Ctrl+P）からPDF保存をお試しください。');
+    });
+  }
+</script>
+</body>
+</html>
